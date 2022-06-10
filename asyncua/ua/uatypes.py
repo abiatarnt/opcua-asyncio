@@ -927,7 +927,7 @@ def get_shape(mylist):
     return dims
 
 
-@dataclass(frozen=True)
+@dataclass()
 class DataValue:
     """
     A value with an associated timestamp, and quality.
