@@ -7,7 +7,7 @@ import logging
 import pickle
 import shelve
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import partial
 from typing import TYPE_CHECKING
 
@@ -101,8 +101,8 @@ class AttributeService:
                     res.append(ua.StatusCode(ua.StatusCodes.BadUserAccessDenied))
                     continue
             if not writevalue.Value.ServerTimestamp:
-                writevalue.Value.ServerTimestamp = datetime.utcnow()
-                writevalue.Value.SourceTimestamp = datetime.utcnow()
+                writevalue.Value.ServerTimestamp = datetime.now(timezone.utc)
+                writevalue.Value.SourceTimestamp = datetime.now(timezone.utc)
             res.append(
                 await self._aspace.write_attribute_value(writevalue.NodeId, writevalue.AttributeId, writevalue.Value)
             )
